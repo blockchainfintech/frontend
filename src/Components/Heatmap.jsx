@@ -1,4 +1,5 @@
 import React from 'react'
+import '../Style/Heatmap.css'
 
 const URL = "http://localhost:5000/";
 const H = window.H;
@@ -72,7 +73,7 @@ class Heatmap extends React.Component {
 
 		// Instantiate (and display) a map object:
 		var map = new H.Map(
-			document.getElementById('mapContainer'),
+			document.getElementsByClassName('Heatmap-container')[0],
 			maptypes.vector.normal.map,
 			{
 				zoom: 15,
@@ -94,7 +95,7 @@ class Heatmap extends React.Component {
 
 	render() {
 		return (
-			<div id='mapContainer' style={{width:640, height:640}}>
+			<div class='Heatmap-container'>
 
 			</div>
 
