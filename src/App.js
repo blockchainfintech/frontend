@@ -13,8 +13,8 @@ class App extends React.Component {
 
     // Obtain the default map types from the platform object:
     var maptypes = platform.createDefaultLayers();
-    console.log(maptypes);
-    console.log(document.getElementById('mapContainer'))
+    //console.log(maptypes);
+    //console.log(document.getElementById('mapContainer'))
 
     // Instantiate (and display) a map object:
     var map = new H.Map(
@@ -25,21 +25,29 @@ class App extends React.Component {
       center: { lat: -33.9, lng: 151.2305 }
     });
 
+
     // Create the default UI:
     var ui = H.ui.UI.createDefault(map, maptypes);
 
     var mapEvents = new H.mapevents.MapEvents(map);
     var behavior = new H.mapevents.Behavior(mapEvents);
 
-    var style = {strokeColor:"rgba(100 , 0, 0, 0.6)", fillColor:"rgba(100, 0, 0, 0.5)"}
+    var style = {strokeColor:"rgba(100 , 0, 0, 0.6)", fillColor:"rgba(100, 0, 0, 0.5)"};
 
-    var circle1 = new H.map.Circle({lat: -33.9000000, lng: 151.23050000}, 100, {style: style});
-    var circle2 = new H.map.Circle({lat: -33.9000000, lng: 151.23150000}, 100);
+    //console.log(map.getViewModel()/*.getLookAtData().bounds*/);
+    console.log(map);
 
 
 
-    map.addObject(circle1);
-    map.addObject(circle2);
+    /* CIRCLES */
+
+    // var circle1 = new H.map.Circle({lat: -33.9000000, lng: 151.23050000}, 100, {style: style});
+    // var circle2 = new H.map.Circle({lat: -33.9000000, lng: 151.23150000}, 100);
+
+
+
+    // map.addObject(circle1);
+    // map.addObject(circle2);
   }
 
 
