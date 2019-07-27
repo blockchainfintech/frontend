@@ -4,14 +4,14 @@
 	top: 20px;
 	padding-left: 20px;
 	z-index: 100;
-	width: 300px;
+	width: 150px;
 	height: 50px;
 	display: flex;
 
 	font-family: 'Segoe UI', sans-serif;
 	font-weight: 600;
 	font-size: 1.2em;
-	color: gray;
+	color: dark-gray;
 
 	align-items: center;
 

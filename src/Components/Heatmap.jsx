@@ -1,8 +1,10 @@
 import React from 'react'
 import '../Style/Heatmap.css'
+import Bubble from './Bubble'
 
 const URL = "http://localhost:5000/";
 const H = window.H;
+const REFRESH_TIME = 10000;
 
 class Heatmap extends React.Component {
 	constructor() {
@@ -18,8 +20,6 @@ class Heatmap extends React.Component {
 			return resp.json();
 		})
 	}
-
-	// updates nodes on the map
 
 	// updates nodes on the map
 	updateNodes(map) {
@@ -42,6 +42,8 @@ class Heatmap extends React.Component {
 			for (var i = 0; i < nodes.length; i++) {
 				var nodeLat = nodes[i].latitude;
 				var nodeLong = nodes[i].longitude;
+				var nodeVal = nodes[i].count;
+				var nodeText = nodes[i].name;
 				var nodePos = {
 					"lat"  : nodeLat,
 					"lng" : nodeLong
@@ -51,6 +53,8 @@ class Heatmap extends React.Component {
 				// add circle to map
 				var circle = new H.map.Circle(nodePos, 100, {style: style});
 				map.addObject(circle);
+
+				var bubble = new Bubble(nodePos, nodeText, map);
 
 				// add circle to all circles
 				this.allCircles.push(circle);
@@ -91,6 +95,11 @@ class Heatmap extends React.Component {
 		var behavior = new H.mapevents.Behavior(mapEvents);	
 
 		this.updateNodes(map);
+
+
+		// refresh it every REFRESH_TIME ms
+		window.setInterval(() => this.updateNodes(map), REFRESH_TIME);
+		
 	}
 
 	render() {
