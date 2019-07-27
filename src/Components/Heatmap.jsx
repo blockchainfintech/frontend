@@ -30,8 +30,6 @@ class Heatmap extends React.Component {
 		cont.className = "infoBubble-root";
 		var child = ReactDOMServer.renderToString(<InfoBubble data={n} />)
 		cont.innerHTML = child;
-		console.log(cont)
-		// debugger
 		return cont;
 	}
 
@@ -65,7 +63,7 @@ class Heatmap extends React.Component {
 
 				var n = nodes[i]
 
-				var style = {strokeColor:"rgba(100, 0, 0, 0.6)", fillColor:"rgba(100, 0, 0, 0.5)"};
+				var style = {strokeColor:"rgba(100, 0, 0, 0.6)", fillColor:`rgba(${255*nodeVal}, 0, 0, 0.5)`};
 				// add circle to map
 				var circle = new H.map.Circle(nodePos, 100, {style: style});
 				map.addObject(circle);

@@ -36,12 +36,8 @@ class Bubble extends React.Component {
 
 	setText(text) {
 		this.text = text;
-		console.log(this.text);
-		//debugger
 		if (this.bubble){
-			console.log(text);
 			this.bubble.setContent(text);
-			// debugger;
 		}
 	}
 
