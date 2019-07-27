@@ -1,11 +1,12 @@
 import React from 'react'
 import '../Style/Heatmap.css'
 import Bubble from './Bubble'
-import AttachInfoBubbles from '../Misc/AttachInfoBubbles'
+import InfoBubble from './InfoBubble'
+import ReactDOMServer from 'react-dom/server';
 
 const URL = "http://localhost:5000/";
 const H = window.H;
-const REFRESH_TIME = 10000;
+const REFRESH_TIME = 2000;
 
 class Heatmap extends React.Component {
 	constructor() {
@@ -27,8 +28,10 @@ class Heatmap extends React.Component {
 		// Make the stuff yea
 		let cont = document.createElement("div");
 		cont.className = "infoBubble-root";
-		cont.tag = JSON.stringify(n)
-
+		var child = ReactDOMServer.renderToString(<InfoBubble data={n} />)
+		cont.innerHTML = child;
+		console.log(cont)
+		// debugger
 		return cont;
 	}
 
@@ -67,17 +70,18 @@ class Heatmap extends React.Component {
 				var circle = new H.map.Circle(nodePos, 100, {style: style});
 				map.addObject(circle);
 
+				var bubbleText = this.generateInfoBubble(n);
+
+
 				// Add bubble
 				if (this.allBubbles[n.nodeId] !== undefined) {
-					// if bubble already existed
-					var ui = new H.ui.UI(this.map);
-					ui.removeBubble(this.allBubbles[n.nodeId]);
-					this.allBubbles[n.nodeId] = null;
+					// bubble already exists
+					this.allBubbles[n.nodeId].setText(bubbleText);
+				} else {
+					var bubble = new Bubble(nodePos, bubbleText, map, n);
+					this.allBubbles[n.nodeId] = bubble;
 				}
-				var bubbleText = this.generateInfoBubble(n);
-				var bubble = new Bubble(nodePos, bubbleText, map, n);
-				this.allBubbles[n.nodeId] = bubble;
-
+				
 				// add circle to all circles
 				this.allCircles.push(circle);
 			}
