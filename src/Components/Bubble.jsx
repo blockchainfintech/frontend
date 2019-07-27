@@ -1,17 +1,17 @@
 import React from 'react'
+import AttachInfoBubbles from '../Misc/AttachInfoBubbles'
 import '../Style/Bubble.css'
 
 const H = window.H;
 
 class Bubble extends React.Component {
-	constructor(coord, text, map) {
+	constructor(coord, text, map, d) {
 		super();
 		this.map = map;
 
 		this.marker = new H.map.Marker(coord);
 		// this.marker.setData(text);
 		map.addObject(this.marker);
-		
 		this.marker.addEventListener('tap', (evt) => {
 			this.bubble = new H.ui.InfoBubble(evt.target.getGeometry(), {
 				content: text
@@ -22,6 +22,8 @@ class Bubble extends React.Component {
 				ui.removeBubble(this.bubble);
 				this.bubble = null;
 			})
+
+			AttachInfoBubbles();
 		}, false)
 	}
 
@@ -30,6 +32,7 @@ class Bubble extends React.Component {
 		if (this.bubble) {
 			var ui = new H.ui.UI(this.map);
 			ui.removeBubble(this.bubble);
+			this.bubble = null;
 		}
 	}
 

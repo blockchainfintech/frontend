@@ -6,7 +6,7 @@ import '../Style/App.css';
 class App extends React.Component {
 	render() {
 		return (
-			<div class="App-container">
+			<div className="App-container">
 				<Header />
 				<Heatmap />
 			</div>

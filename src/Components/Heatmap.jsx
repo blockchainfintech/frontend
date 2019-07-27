@@ -1,6 +1,7 @@
 import React from 'react'
 import '../Style/Heatmap.css'
 import Bubble from './Bubble'
+import AttachInfoBubbles from '../Misc/AttachInfoBubbles'
 
 const URL = "http://localhost:5000/";
 const H = window.H;
@@ -10,6 +11,7 @@ class Heatmap extends React.Component {
 	constructor() {
 		super();
 		this.allCircles = [];
+		this.allBubbles = {};
 	}
 
 	// sends GET request to server, returns object returned
@@ -19,6 +21,15 @@ class Heatmap extends React.Component {
 		}).then(resp => {
 			return resp.json();
 		})
+	}
+
+	generateInfoBubble(n) {
+		// Make the stuff yea
+		let cont = document.createElement("div");
+		cont.className = "infoBubble-root";
+		cont.tag = JSON.stringify(n)
+
+		return cont;
 	}
 
 	// updates nodes on the map
@@ -49,18 +60,28 @@ class Heatmap extends React.Component {
 					"lng" : nodeLong
 				}
 
-				var style = {strokeColor:"rgba(100 , 0, 0, 0.6)", fillColor:"rgba(100, 0, 0, 0.5)"};
+				var n = nodes[i]
+
+				var style = {strokeColor:"rgba(100, 0, 0, 0.6)", fillColor:"rgba(100, 0, 0, 0.5)"};
 				// add circle to map
 				var circle = new H.map.Circle(nodePos, 100, {style: style});
 				map.addObject(circle);
 
-				var bubble = new Bubble(nodePos, nodeText, map);
+				// Add bubble
+				if (this.allBubbles[n.nodeId] !== undefined) {
+					// if bubble already existed
+					var ui = new H.ui.UI(this.map);
+					ui.removeBubble(this.allBubbles[n.nodeId]);
+					this.allBubbles[n.nodeId] = null;
+				}
+				var bubbleText = this.generateInfoBubble(n);
+				var bubble = new Bubble(nodePos, bubbleText, map, n);
+				this.allBubbles[n.nodeId] = bubble;
 
 				// add circle to all circles
 				this.allCircles.push(circle);
 			}
 		})
-
 	}
 
 	componentDidMount() {
@@ -83,6 +104,7 @@ class Heatmap extends React.Component {
 				zoom: 15,
 				center: { lat: -33.9, lng: 151.2305 }
 			});
+		this.map = map;
 
 		map.addEventListener('dragend', () => {
 			this.updateNodes(map);
@@ -104,7 +126,7 @@ class Heatmap extends React.Component {
 
 	render() {
 		return (
-			<div class='Heatmap-container'>
+			<div className='Heatmap-container'>
 
 			</div>
 

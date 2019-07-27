@@ -1,0 +1,32 @@
+.InfoBubble-Container {
+	min-width: 250px;
+}
+
+.InfoBubble-Title {
+	font-weight: bold;
+}
+
+.InfoBubble-IndContainer {
+	width: 100px;
+	display: flex;
+	justify-content: space-between;
+}
+
+.crowd-high .ind1, .crowd-high .ind2, .crowd-high .ind3 {
+	background-color: #e63f19;
+}
+
+.crowd-med .ind1, .crowd-med .ind2 {
+	background-color: #ffeb0a;
+}
+
+.crowd-low .ind1 {
+	background-color: #3ca832;
+}
+
+.InfoBubble-Ind {
+	width: 30px;
+	height: 10px;
+	background-color: #F7F7F7;
+	border-radius: 3px;
+}
